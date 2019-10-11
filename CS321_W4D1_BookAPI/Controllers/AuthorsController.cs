@@ -8,15 +8,15 @@ namespace CS321_W4D1_BookAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorsController : ControllerBase
+    public class PublishersController : ControllerBase
     {
-        private readonly IAuthorService _authorService;
+        private readonly IPublisherService _publisherService;
 
         // Constructor
-        public AuthorsController(IAuthorService authorService)
+        public PublishersController(IPublishersService publisherService)
         {
             // TODO: keep a reference to the service so we can use below
-            _authorService = authorService;
+            _publisherService = publisherService;
         }
 
         // TODO: get all authors
@@ -25,10 +25,10 @@ namespace CS321_W4D1_BookAPI.Controllers
         public IActionResult Get()
         {
             // TODO: return ApiModels instead of domain models
-            var authorModels = _authorService
+            var publisherModels = _publisherService
                 .GetAll()
                 .ToApiModels();
-            return Ok(authorModels);
+            return Ok(publisherModels);
         }
 
         // get specific author by id
@@ -37,44 +37,44 @@ namespace CS321_W4D1_BookAPI.Controllers
         public IActionResult Get(int id)
         {
             // TODO: return ApiModel instead of domain model
-            var author = _authorService
+            var publisher = _publisherService
                 .Get(id)
                 .ToApiModel();
-            if (author == null) return NotFound();
-            return Ok(author);
+            if (publisher == null) return NotFound();
+            return Ok(publisher);
         }
 
         // create a new author
         // POST api/authors
         [HttpPost]
-        public IActionResult Post([FromBody] AuthorModel newAuthor)
+        public IActionResult Post([FromBody] PublisherModel newPublisher)
         {
             try
             {
                 // TODO: convert the newAuthor to a domain model
                 // add the new author
-                _authorService.Add(newAuthor.ToDomainModel());
+                _publisherService.Add(newPublisher.ToDomainModel());
             }
             catch (System.Exception ex)
             {
-                ModelState.AddModelError("AddAuthor", ex.GetBaseException().Message);
+                ModelState.AddModelError("AddPublisher", ex.GetBaseException().Message);
                 return BadRequest(ModelState);
             }
 
             // return a 201 Created status. This will also add a "location" header
             // with the URI of the new author. E.g., /api/authors/99, if the new is 99
-            return CreatedAtAction("Get", new { Id = newAuthor.Id }, newAuthor);
+            return CreatedAtAction("Get", new { Id = newPublisher.Id }, newPublisher);
         }
 
         // TODO: update an existing author
         // PUT api/authors/:id
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] AuthorModel updatedAuthor)
+        public IActionResult Put(int id, [FromBody] PublisherModel updatedPublisher)
         {
             // TODO: convert updatedAuthor to a domain model
-            var author = _authorService.Update(updatedAuthor.ToDomainModel());
-            if (author == null) return NotFound();
-            return Ok(author);
+            var publisher = _publisherService.Update(updatedPublisher.ToDomainModel());
+            if (publisher == null) return NotFound();
+            return Ok(publisher);
         }
 
         // TODO: delete an existing author
@@ -82,9 +82,9 @@ namespace CS321_W4D1_BookAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var author = _authorService.Get(id);
-            if (author == null) return NotFound();
-            _authorService.Remove(author);
+            var publisher = _apublisherService.Get(id);
+            if (publisher == null) return NotFound();
+            _publisherService.Remove(publisher);
             return NoContent();
         }
     }

@@ -15,6 +15,9 @@ namespace CS321_W4D1_BookAPI.ApiModels
         public string Author {get; set;}
 
         public int PublisherId {get; set;}
+        public string Publisher {get; set;}
+
+        public int PublisherId {get; set;}
         // TODO: fill in BookModel properties
     }
 }

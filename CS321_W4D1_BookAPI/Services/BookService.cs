@@ -79,6 +79,16 @@ namespace CS321_W4D1_BookAPI.Services
                  .Where(b => b.AuthorId == authorId)
                  .ToList();
          }
+
+        public IEnumberable<Book> GetBooksForPublisher(int PublisherId)
+        {
+            return _bookContext.Books
+                 .Include(b => b.Publisher)
+                 .Include(b => b.Author)
+                 .Where(b => b.PublisherId == publisherId)
+                 .ToList();
+        }
+       
     
     }
 }

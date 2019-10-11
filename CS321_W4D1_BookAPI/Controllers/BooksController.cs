@@ -88,12 +88,12 @@ namespace CS321_W4D1_BookAPI.Controllers
             return Ok(bookModels);
         }
 
-        public IEnumerable<Book> GetBooksForAuthor(int authorId)
+        public IEnumerable<Book> GetBooksForPublisher(int publisherId)
         {
             return _bookContext.Books
                 .Include(b => b.Publisher)
                 .Include(b => b.Author)
-                .Where(b => b.AuthorId == authorId)
+                .Where(b => b.PublisherId == publisherId)
                 .ToList();
         }
         // GET api/author/{authorId}/books
