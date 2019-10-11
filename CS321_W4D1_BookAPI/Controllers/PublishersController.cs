@@ -1,6 +1,8 @@
 using CS321_W4D1_BookAPI.ApiModels;
 using CS321_W4D1_BookAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using CS321_W4D1_BookAPI.Services;
+using CS321_W4D1_BookAPI.ApiModels;
 
 namespace CS321_W4D1_BookAPI.Controllers
 {
@@ -8,23 +10,16 @@ namespace CS321_W4D1_BookAPI.Controllers
     [ApiController]
     public class PublishersController : ControllerBase
     {
-        private readonly IBookService _bookService;
-
-        // Constructor
-        public PublishersController(IBookService bookService)
+       private readonly IPublisherService _publisherService;
+       public PublishersController (IPublishersService publisherService)
         {
-            _bookService = bookService;
+            _publisherService = publisherService;
         }
-
         // GET api/books
         [HttpGet]
         public IActionResult Get()
         {
-            // TODO: convert domain models to apimodels
-            var bookModels = _bookService
-                .GetAll().ToApiModels();
-
-            return Ok(bookModels);
+            return Ok(_publisherService.GetAll().ToApiModels());
         }
 
         // get specific book by id
@@ -32,10 +27,10 @@ namespace CS321_W4D1_BookAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            // TODO: convert domain model to apimodel
-            var book = _bookService.Get(id).ToApiModel;
-            if (book == null) return NotFound();
-            return Ok(book.ToApiModel());
+            var publisher = _publisherService.Get(id).ToApiModel();
+            if (publisher == null) return NotFound();
+            return Ok(publisher);
+
         }
 
         // create a new book
